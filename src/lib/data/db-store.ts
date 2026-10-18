@@ -1,5 +1,5 @@
 import "server-only";
-import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, count, desc, eq, gte, inArray } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import type { Store } from "./store";
 import type { AgentEvent, CheckIn, Product, Scan, Trial, UserProfile } from "../types";
@@ -109,6 +109,13 @@ export const dbStore: Store = {
       await insertScan;
     }
     return s;
+  },
+
+  async countYoucamScans(sinceIso, userId) {
+    const conds = [eq(scans.source, "youcam"), gte(scans.capturedAt, new Date(sinceIso))];
+    if (userId) conds.push(eq(scans.userId, userId));
+    const [r] = await getDb().select({ n: count() }).from(scans).where(and(...conds));
+    return Number(r?.n ?? 0);
   },
 
   async listCheckIns(userId) {

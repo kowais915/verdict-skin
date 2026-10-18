@@ -23,6 +23,8 @@ export interface Store {
   listScans(userId: string): Promise<Scan[]>;
   getScan(userId: string, id: string): Promise<Scan | null>;
   createScan(scan: Scan): Promise<Scan>;
+  /** Scans scored by YouCam since a moment, for one user or everyone. Used to protect the API unit budget. */
+  countYoucamScans(sinceIso: string, userId?: string): Promise<number>;
 
   listCheckIns(userId: string): Promise<CheckIn[]>;
   saveCheckIn(checkIn: CheckIn): Promise<CheckIn>;

@@ -40,11 +40,19 @@ export async function POST(req: Request) {
   let taskId: string | undefined;
   let source: Scan["source"] = "demo";
 
-  if (youcamEnabled()) {
+  // Protect the YouCam unit budget on the public demo: a daily cap overall and per account.
+  // Past the cap the scan still works, with a clearly labelled simulated reading.
+  const since = new Date(Date.now() - 24 * 3600_000).toISOString();
+  const overCap =
+    youcamEnabled() &&
+    ((await store.countYoucamScans(since)) >= Number(process.env.YOUCAM_DAILY_CAP ?? 30) ||
+      (await store.countYoucamScans(since, userId)) >= Number(process.env.YOUCAM_USER_DAILY_CAP ?? 6));
+
+  if (youcamEnabled() && !overCap) {
     try {
       const result =
         sample || !(file instanceof File)
-          ? await analyzeSkin({ srcUrl: sample!.url, metrics: METRIC_KEYS, hd: true })
+          ? await analyzeSkin({ srcUrl: sample!.url, metrics: METRIC_KEYS, hd: false })
           : await analyzeSkin({
               image: await file.arrayBuffer(),
               contentType: file.type === "image/png" ? "image/png" : "image/jpeg",
@@ -135,7 +143,7 @@ export async function POST(req: Request) {
   }
   await store.addAgentEvents(events);
 
-  return NextResponse.json({ scanId: scan.id, source });
+  return NextResponse.json({ scanId: scan.id, source, capped: overCap });
 }
 
 function clampInt(v: FormDataEntryValue | null, fallback: number) {

@@ -32,7 +32,7 @@ export default async function ScanResultPage({ params }: PageProps<"/app/scans/[
           <p className="text-smoke">{formatDateTime(scan.capturedAt)}</p>
           <h1 className="display mt-1 text-5xl sm:text-6xl">{scan.isBaseline ? "Baseline scan" : "Scan results"}</h1>
           <p className="mt-2 text-sm text-smoke">
-            {scan.source === "youcam" ? `Scored by YouCam Skin AI${scan.imageUrl ? ", using a YouCam sample portrait" : ""}` : "Sample data, simulated reading"}
+            {scan.source === "youcam" ? `Scored by YouCam Skin AI${scan.imageUrl ? ", using a YouCam sample portrait" : ""}` : "Simulated reading (sample data, or the demo's daily YouCam scan limit was reached)"}
           </p>
         </div>
         <dl className="flex gap-8">

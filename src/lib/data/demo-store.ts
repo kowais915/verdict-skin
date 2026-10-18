@@ -77,6 +77,11 @@ export const demoStore: Store = {
     return scan;
   },
 
+  async countYoucamScans(sinceIso, userId) {
+    const all = userId ? account(userId).scans : [...accounts.values()].flatMap((a) => a.scans);
+    return all.filter((s) => s.source === "youcam" && s.capturedAt >= sinceIso).length;
+  },
+
   async listCheckIns(userId) {
     return [...account(userId).checkIns].sort(byNewest);
   },
