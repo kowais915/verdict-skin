@@ -8,6 +8,8 @@ When a new product arrives, an agent reads its ingredient list and designs a sho
 
 Built for the YouCam API Skin AI & eCommerce VTO Hackathon (Skin AI track).
 
+![Verdict landing page](docs/screenshots/01-landing.jpg)
+
 ---
 
 ## The problem
@@ -19,6 +21,8 @@ Built for the YouCam API Skin AI & eCommerce VTO Hackathon (Skin AI track).
 So people judge products by feel, miss the return window, and keep paying for things that don't work. Retailers get vague "didn't work for me" returns with no data behind them.
 
 ## What Verdict does
+
+![How a trial runs: paste the label, the agent designs the trial, two baseline scans set the noise floor, YouCam scans on schedule, and the verdict engine decides Keep, Ditch or Not yet](docs/how-it-works.svg)
 
 | Moment | What happens | YouCam / logic used |
 | --- | --- | --- |
@@ -39,6 +43,18 @@ Most Skin AI apps show a single score. Verdict treats the API as a **measurement
 - **Is commerce-aware.** The whole plan is built around the retailer's return deadline.
 
 ## Screens
+
+| Today | A trial |
+| --- | --- |
+| ![Today: what's due, trials on the litmus strip, agent notes](docs/screenshots/02-today.jpg) | ![Trial page: litmus strip and the trial plotted against the return window](docs/screenshots/03-trial.jpg) |
+| **Noise-band charts** | **The trial designer agent** |
+| ![Each metric charted against the noise band from two baseline scans, with the onset day marked](docs/screenshots/04-trial-charts.jpg) | ![The agent reading the label, choosing metrics, planning purge windows and routine clashes](docs/screenshots/07-agent.jpg) |
+| **Verdict: Keep** | **Verdict: Ditch** |
+| ![Keep verdict with the evidence and what could skew it](docs/screenshots/05-verdict.jpg) | ![Ditch verdict: no change beyond the noise, marked for return](docs/screenshots/06-ditch.jpg) |
+| **Shelf** | |
+| ![Shelf: proven vs untested spend and routine clash detection](docs/screenshots/08-shelf.jpg) | |
+
+### All routes
 
 - `/`: landing page
 - `/sign-in`, `/sign-up`: Clerk, or a demo-account note when Clerk keys are missing
@@ -120,7 +136,7 @@ Errors are translated into instructions the user can act on (face too small, mor
 
 ### Privacy
 
-The photo goes to YouCam to be scored. A copy stays on the device for the before/after view. Our database stores **scores, not faces**.
+The photo goes to YouCam to be scored. A copy stays on the device for the before/after view. The database stores **scores, not faces**.
 
 ## Useful scripts
 

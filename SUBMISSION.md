@@ -22,7 +22,7 @@ Skin AI
 
 ## What it does (paste into "About the project")
 
-**Inspiration.** The brief describes the exact moment we built for: *standing in front of a mirror deciding whether a product is working.* Nobody can answer that by looking. Most actives need 4–12 weeks to show a measurable change. A typical beauty return window is 30 days. A single selfie swings more from lighting than most serums change your skin in a month. So people guess, the window closes, and they keep paying for products that don't work.
+**Inspiration.** The brief describes the exact moment I built for: *standing in front of a mirror deciding whether a product is working.* Nobody can answer that by looking. Most actives need 4–12 weeks to show a measurable change. A typical beauty return window is 30 days. A single selfie swings more from lighting than most serums change your skin in a month. So people guess, the window closes, and they keep paying for products that don't work.
 
 **What it does.** Verdict turns every new skincare product into a small, honest experiment:
 
@@ -32,11 +32,11 @@ Skin AI
 4. **A verdict with evidence.** A change counts only when it clears twice the noise, after the active's expected onset. Breakouts inside a retinoid purge window aren't counted against the product. Dim scans are set aside. Overlapping trials and logged confounders (period, sun, short sleep) are surfaced.
 5. **Act on it.** Keep sets a reorder reminder. Ditch drafts the return message to the retailer and suggests ingredients with a different mechanism to try next.
 
-**How we built it.** Next.js 16 (App Router, server actions), React 19, Tailwind 4, Clerk for auth, and Neon Postgres via Drizzle. It's mobile-first and installable as a PWA.
+**How I built it.** Next.js 16 (App Router, server actions), React 19, Tailwind 4, Clerk for auth, and Neon Postgres via Drizzle. It's mobile-first and installable as a PWA.
 - *YouCam Skin Analysis API v2:* file → pre-signed upload → task → poll, with all 12 concerns, HD/SD chosen from the capture resolution, mask overlays enabled, and errors translated into instructions the user can act on.
 - *Verdict engine:* per-metric noise estimate from paired baselines (with a per-metric floor), z-scores on **raw_score** (YouCam documents ui_score as adjusted to be encouraging, which would bias a before/after test), onset gating, purge handling, and a "litmus strip" showing what the verdict was at each scan.
 - *Trial designer agent:* a knowledge base of 21 actives with onset and peak timelines, purge windows, irritation guards and clashes. It reasons step by step and shows its reasoning to the user.
-- *Privacy:* photos go to YouCam for scoring and stay on the device. We store scores, not faces.
+- *Privacy:* photos go to YouCam for scoring and stay on the device. I store scores, not faces.
 
 **Who it's for.** Skincare buyers spending $30–$80 per product who want to know whether it's working, and retailers and brands that want fewer blind returns and products backed by evidence. A retailer could offer a "Verdict-backed guarantee" and see which products actually move which concerns.
 
