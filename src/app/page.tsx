@@ -53,8 +53,8 @@ export default function Landing() {
               <ButtonLink href={start} size="lg">
                 Start a trial
               </ButtonLink>
-              <ButtonLink href={storeMode === "demo" ? "/app/trials/t_calmfix" : "#science"} size="lg" variant="secondary">
-                {storeMode === "demo" ? "See a live trial" : "See how it measures"}
+              <ButtonLink href={storeMode === "demo" ? "/app/trials/t_calmfix" : "/demo"} size="lg" variant="secondary" prefetch={false}>
+                Try the live demo
               </ButtonLink>
             </div>
           </div>

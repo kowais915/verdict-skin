@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
+import { cookies } from "next/headers";
 import { store } from "./data";
 import type { UserProfile } from "./types";
 
@@ -18,9 +19,18 @@ export const getUserId = cache(async (): Promise<string> => {
   if (!clerkEnabled) return DEMO_USER_ID;
   const { auth } = await import("@clerk/nextjs/server");
   const { userId } = await auth();
-  if (!userId) redirect("/sign-in");
-  return userId;
+  if (userId) return userId;
+  // Guest demo: a per-visitor sandbox account, so judges can try everything without signing up.
+  const guest = (await cookies()).get(GUEST_COOKIE)?.value;
+  if (guest && /^guest_[a-z0-9]{16}$/.test(guest)) return guest;
+  redirect("/sign-in");
 });
+
+export const GUEST_COOKIE = "verdict_guest";
+
+export function isGuest(userId: string) {
+  return userId.startsWith("guest_");
+}
 
 /**
  * The signed-in user's profile. First visit after sign-up creates the row from

@@ -32,6 +32,13 @@ export function AuthShell({ title, body, children }: { title: string; body: stri
           <h1 className="display text-5xl">{title}</h1>
           <p className="mt-3 text-lg text-ink/80">{body}</p>
           <div className="mt-8">{children}</div>
+          <p className="mt-6 text-sm text-smoke">
+            Just looking?{" "}
+            <a href="/demo" className="font-semibold text-ink underline underline-offset-4">
+              Try the demo without an account
+            </a>
+            . It comes with a month of sample trials and runs real YouCam scans.
+          </p>
         </div>
       </main>
     </div>

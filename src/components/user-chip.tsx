@@ -15,6 +15,19 @@ export function Avatar({ profile, size = 36 }: { profile: Pick<UserProfile, "nam
 }
 
 export function UserChip({ profile, compact = false }: { profile: UserProfile; compact?: boolean }) {
+  if (profile.id.startsWith("guest_")) {
+    return (
+      <Link href="/sign-up" className="flex items-center gap-3 rounded-full p-1.5 pr-3 hover:bg-mist">
+        <Avatar profile={profile} />
+        {!compact && (
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-semibold">Guest demo</span>
+            <span className="block truncate text-2xs text-smoke">Create an account</span>
+          </span>
+        )}
+      </Link>
+    );
+  }
   if (clerkPublicEnabled && compact) return <UserButton />;
   if (clerkPublicEnabled) {
     return (
