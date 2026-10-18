@@ -1,5 +1,16 @@
 # Devpost submission kit
 
+## Links
+- Live app: https://verdict-skincare.vercel.app
+- Try without an account: https://verdict-skincare.vercel.app/demo
+- Code: https://github.com/kowais915/verdict-skin
+
+## Testing instructions (paste into Devpost)
+1. Open https://verdict-skincare.vercel.app/demo. No sign-up needed: you get a guest account with a month of sample trials already loaded. You can also sign up with Google or email; onboarding offers the same sample data.
+2. Open **Calm Fix Serum** for the trial page (litmus strip, return-window timeline, noise-band charts), then **Open the verdict**.
+3. Tap **Take a scan** and either use your camera or pick one of YouCam's sample portraits under "Try a sample portrait". Both run a real YouCam Skin Analysis (HD, 12 concerns).
+4. Tap **Trials** then **New trial**, then **Fill in an example product**, then **Design my trial** to watch the agent plan a trial around the return window.
+
 ## Name
 Verdict
 
@@ -60,9 +71,9 @@ Record it on a phone (the rules ask for footage on the target device), at 390px 
 8. Mobile views
 
 ## Submission checklist
-- [ ] Deploy to Vercel with `YOUCAM_API_KEY`, the Clerk keys and `DATABASE_URL`
-- [ ] Run `npm run db:push` against Neon
-- [ ] Public GitHub repo with a license, or private and shared with contact_event@PerfectCorp.com
-- [ ] Testing instructions: deployed URL plus a demo login (if you keep Clerk on), or deploy without Clerk keys so judges land on the demo account
+- [x] Deployed on Vercel with YouCam, Clerk and Neon configured
+- [x] Neon schema applied
+- [x] Public GitHub repo with MIT license
+- [x] Testing instructions with a no-signup demo link
 - [ ] YouTube video (public, 1–3 minutes, no copyrighted music)
 - [ ] Optional: share the video and tag @YouCam API for the 500-unit bonus

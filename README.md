@@ -1,5 +1,7 @@
 # Verdict: put your skincare on trial
 
+**Live:** https://verdict-skincare.vercel.app · **Try it without an account:** https://verdict-skincare.vercel.app/demo
+
 Verdict tells you whether a skincare product is actually working **before the store's return window closes**.
 
 When a new product arrives, an agent reads its ingredient list and designs a short trial. It decides what should change, when the change should show, what could go wrong, and whether a fair read fits inside the return window. You scan your face on a schedule with **YouCam Skin AI**. Every change is measured against *your own* noise floor, and you get a verdict: **Keep**, **Ditch**, or **Not yet**. A Ditch comes with a ready-to-send return note.
