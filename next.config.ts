@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  devIndicators: false,
   turbopack: {
     rules: {
       "*.css": {
@@ -11,6 +9,17 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
+  },
+  images: {
+    remotePatterns: [
+      // YouCam result masks are served from pre-signed storage URLs
+      { protocol: "https", hostname: "**.makeupar.com" },
+      { protocol: "https", hostname: "**.perfectcorp.com" },
+      { protocol: "https", hostname: "img.clerk.com" },
+    ],
+  },
+  experimental: {
+    serverActions: { bodySizeLimit: "12mb" },
   },
 };
 
