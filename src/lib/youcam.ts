@@ -114,10 +114,16 @@ export async function analyzeSkin(
     if (task_status === "success") {
       if (process.env.YOUCAM_DEBUG) console.log("[youcam] result", JSON.stringify(poll.data).slice(0, 4000));
       const ageItem = (results?.output ?? []).find((o) => o.type === "skin_age");
-      const readings: MetricReading[] = (results?.output ?? []).flatMap((o) => {
+      // One reading per metric. HD results can include more than one entry that
+      // maps to the same concern, so the first scored entry wins.
+      const byMetric = new Map<MetricKey, MetricReading>();
+      for (const o of results?.output ?? []) {
         const metric = metricFromYoucamType(o.type);
-        return metric && typeof o.raw_score === "number" ? [{ metric, uiScore: o.ui_score, rawScore: o.raw_score, maskUrl: o.mask_urls?.[0] }] : [];
-      });
+        if (metric && typeof o.raw_score === "number" && !byMetric.has(metric)) {
+          byMetric.set(metric, { metric, uiScore: Math.round(o.ui_score), rawScore: o.raw_score, maskUrl: o.mask_urls?.[0] });
+        }
+      }
+      const readings = [...byMetric.values()];
       return { taskId, readings, skinAge: results?.skin_age ?? (ageItem?.score !== undefined ? Math.round(ageItem.score) : undefined) };
     }
     if (task_status === "error") throw new YoucamError(error ?? "Skin analysis failed", error);
