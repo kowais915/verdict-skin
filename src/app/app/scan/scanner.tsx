@@ -89,24 +89,26 @@ export function Scanner({
   }, [stage]);
 
   async function captureFrom(source: CanvasImageSource, w: number, h: number) {
+    // Read every pixel we need synchronously, before anything is awaited:
+    // the camera is switched off right after capture, and a stopped video
+    // draws as black.
     const light = readLight(source, w, h);
     const sig = signature(source, w, h);
-    setShot({
-      blob: await toJpeg(source, w, h),
-      preview: thumbnail(source, w, h, 720),
-      light,
-      align: alignment(sig, ghostSig.current),
-      hd: Math.min(w, h) >= 1080,
-      sig,
-    });
+    const preview = thumbnail(source, w, h, 720);
+    const pending = toJpeg(source, w, h);
+    const blob = await pending;
+    setShot({ blob, preview, light, align: alignment(sig, ghostSig.current), hd: Math.min(w, h) >= 1080, sig });
     setStage("review");
   }
 
-  function capture() {
+  async function capture() {
     const v = videoRef.current;
-    if (!v) return;
-    captureFrom(v, v.videoWidth, v.videoHeight);
-    stop();
+    if (!v || !v.videoWidth) return;
+    try {
+      await captureFrom(v, v.videoWidth, v.videoHeight);
+    } finally {
+      stop();
+    }
   }
 
   function onFile(file: File) {
